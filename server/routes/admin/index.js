@@ -12,6 +12,15 @@ module.exports = app => {
       res.send(model) //发回客户端、让客户端知道创建完成了(创建的是什么)
    })
 
+   router.delete('/categories/:id', async (req, res) => {
+      //删除
+      const model = await Category.deleteMany({
+         _id:req.params.id
+      })
+      res.send(model) //发回客户端..  {n: 1, ok: 1, deletedCount: 1 }
+
+   })
+
    router.put('/categories/:id', async (req, res) => {
       //修改数据,注意接收两个参数
       const model = await Category.findByIdAndUpdate(req.params.id, req.body)
@@ -41,12 +50,6 @@ module.exports = app => {
 */
    })
 
-   // router.get('/categories/:id', async (req, res) => {
-   //    //删除
-   //    const model = await Category.remove({
-   //       _id:req.body.id
-   //    })
-   //    res.send(model) //发回客户端..
-   // })
+  
    
 }
