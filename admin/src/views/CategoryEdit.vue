@@ -3,9 +3,16 @@
     <h1>{{ id?'编辑':'创建' }}分类</h1>
     <el-form label-width="120px" @submit.native.prevent="save">
       <!-- 这里为什么用.native？ .prevent阻止表单跳转链接 -->
+      <el-form-item label="上级分类">
+        <el-select v-model="model.parent">
+          <el-option v-for="item in parents" :key="item._id" :label="item.name" :value="item._id"></el-option>
+        </el-select>
+      </el-form-item>
+
       <el-form-item label="名称">
         <el-input v-model="model.name"></el-input>
       </el-form-item>
+    
       <el-form-item>
         <el-button type="primary" native-type="submit">保存</el-button>
       </el-form-item>
@@ -20,12 +27,14 @@ export default {
   },
   data() {
     return {
-      model: {}
+      model: {},
+      parents: [] //父级的选项
     };
   },
 
   created() {
     this.id && this.CategoryName(); //先判断有无id，有则查
+    this.CategoryParents();
   },
 
   methods: {
@@ -50,14 +59,18 @@ export default {
         });
       }
     },
-    // 初始时就根据id查询分类名称 
+    // 初始时就根据id查询分类名称
     async CategoryName() {
       let res = await this.$http.get(`categories/${this.id}`);
       this.model = res.data;
+    },
+    // 初始时获取所有的父级分类
+    async CategoryParents() {
+      const res = await this.$http.get("categories");
+      this.parents = res.data;
     }
   }
 };
-
 </script>
 
 <style>

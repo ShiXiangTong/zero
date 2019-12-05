@@ -3,10 +3,17 @@ const mongoose = require('mongoose')
 
 //定义模型有哪些
 const schema = new mongoose.Schema({
+    
+    //某父级分类 类型
+    parent:{
+        type:mongoose.SchemaTypes.ObjectId, //数据库中的id格式
+        ref:"Category"  // 所属集合 (貌似没用一样)
+    },
+    
+    // 某分类 类型
     name:{
         type:String
-    }
-    //暂时定义
+    },
 })
 
 // 导出

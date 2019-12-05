@@ -31,7 +31,6 @@
       <el-main>
         <!-- 显示分类 -->
         <router-view></router-view>
-       
       </el-main>
     </el-container>
   </el-container>
